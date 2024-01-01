@@ -33,7 +33,7 @@ public class Configuration {
 //I mean on uhhh login screen above input box? or do you want that?
 
     public static final String CLIENT_TITLE = "Vanguard";
-    public static final String WEBSITE = "Vanguard317.com";
+    public static final String WEBSITE = "https://vanguardrsps.com";
     public static final String DEDICATED_SERVER_ADDRESS = Configuration.serverConnection;//15.204.209.182
     public static final String TEST_SERVER_ADDRESS = "15.204.209.182";//51.79.50.152
     public static final int PORT = 52777;
