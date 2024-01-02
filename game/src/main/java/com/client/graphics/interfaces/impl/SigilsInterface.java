@@ -16,7 +16,7 @@ public class SigilsInterface extends RSInterface {
         addSprite(46001, 0, "Interfaces/Collectionlog/BACKGROUND");
         addHoverButton(46002, "Interfaces/CollectionLog/CLOSE", 0, 16, 16, "Close", -1, 39003, 3);
         addHoveredButton(46003, "Interfaces/CollectionLog/CLOSE", 1, 16, 16, 39005);
-        addText(46004, "Sigils of Nexus", tda, 1, 0xff9933, true, true);
+        addText(46004, "Sigils of Vanguard", tda, 1, 0xff9933, true, true);
         addItemContainer(46005, 1, 1, 0, 0, true);
         addText(46006, "Sigil title", tda, 2, 0x2FD458, true, true);
         addText(46007, "Information", tda, 2, 0xff9933, false, true);

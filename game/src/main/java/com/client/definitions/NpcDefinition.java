@@ -1012,7 +1012,7 @@ public final class NpcDefinition implements RSNPCComposition {
 		}
 		if (i == 315) {
 			entityDef.name = "Sigil Tutor";
-			entityDef.actions = new String[] { "Talk-to", null, null, "Sigil of Nexus", null };
+			entityDef.actions = new String[] { "Talk-to", null, null, "Sigil of Vanguard", null };
 		}
 		if (i == 3310) {
 			entityDef.name = "Perks Tutor";
