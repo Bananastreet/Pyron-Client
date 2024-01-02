@@ -40,7 +40,7 @@ public class HoverMenuManager {
         // PETS:
         menus.put(16015, new HoverMenu("10% increased droprate boost."));//dharok pet
 
-        menus.put(6806, new HoverMenu("When used with the ring of Nexus +12% droprate bonus."));//runerogue imbue scroll
+        menus.put(6806, new HoverMenu("When used with the ring of Vanguard +12% droprate bonus."));//runerogue imbue scroll
 
         menus.put(30023, new HoverMenu("100% chance to double votes when summoned."));//vote pet
         menus.put(30010, new HoverMenu("80% chance to pickup crystal keys that drop."));//postie pete
@@ -70,8 +70,8 @@ public class HoverMenuManager {
         menus.put(30120, new HoverMenu("Extra 10% in droprate boost & constant +10 strength bonus for all styles in pvm."));//dark corrupt beast
         menus.put(30021, new HoverMenu("10% increased drop rate boost."));//roc
         menus.put(30121, new HoverMenu("20% increased drop rate boost."));//Dark roc
-        menus.put(30022, new HoverMenu("The most powerful pet on Nexus."));//Kratos
-        menus.put(30122, new HoverMenu("The most powerful pet on Nexus."));//Dark Kratos
+        menus.put(30022, new HoverMenu("The most powerful pet on Vanguard."));//Kratos
+        menus.put(30122, new HoverMenu("The most powerful pet on Vanguard."));//Dark Kratos
 
         //MISC
         menus.put(21307, new HoverMenu("Contains high-tier pvp related gear."));//rouge crate
@@ -195,7 +195,7 @@ public class HoverMenuManager {
         menus.put(1464, new HoverMenu("Can be exchanged for vote points or sold to players."));
         menus.put(2996, new HoverMenu("Can be exchanged for PK points or sold to players."));
 
-        System.out.println("Nexus has loaded " + menus.size() + "x menu hovers.");
+        System.out.println("Vanguard has loaded " + menus.size() + "x menu hovers.");
     }
 
     public static int drawType() {
