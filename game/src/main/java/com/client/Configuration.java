@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Configuration {
 
-    public static String serverConnection = "127.0.0.1"; //15.204.209.182//
+    public static String serverConnection = "15.204.238.64"; //15.204.238.64//
 
     /**
      * Client version is a number that will tell the server whether

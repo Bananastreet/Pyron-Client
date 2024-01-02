@@ -151,7 +151,7 @@ public final class NpcDefinition implements RSNPCComposition {
 			entityDef.actions[0] = "Open Shop";
 		}
 		if (i == 7599) {
-			entityDef.name = "Nexus Guide";
+			entityDef.name = "Vanguard Guide";
 		}
 		if (i == 4305) {
 			entityDef.name = "Drunken cannoneer";
@@ -1012,7 +1012,7 @@ public final class NpcDefinition implements RSNPCComposition {
 		}
 		if (i == 315) {
 			entityDef.name = "Sigil Tutor";
-			entityDef.actions = new String[] { "Talk-to", null, null, "Sigil of Nexus", null };
+			entityDef.actions = new String[] { "Talk-to", null, null, "Sigil of Vanguard", null };
 		}
 		if (i == 3310) {
 			entityDef.name = "Perks Tutor";

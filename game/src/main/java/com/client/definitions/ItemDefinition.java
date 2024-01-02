@@ -1360,7 +1360,7 @@ public final class ItemDefinition implements RSItemComposition {
                 itemDef.interfaceOptions = new String[]{null, null, null, null, null};
                 break;
             case 26146:
-                itemDef.name = "Sigil of Nexus";
+                itemDef.name = "Sigil of Vanguard";
                 itemDef.interfaceOptions = new String[]{null, null, null, null, null};
                 break;
             case 26017:
@@ -1852,7 +1852,7 @@ public final class ItemDefinition implements RSItemComposition {
                 itemDef.interfaceOptions = new String[]{"Open", null, "Open-All", null, "Drop"};
                 break;
             case 22316:
-                itemDef.name = "Sword of Nexus";
+                itemDef.name = "Sword of Vanguard";
                 break;
             case 19942:
                 itemDef.name = "Lil Mimic";
