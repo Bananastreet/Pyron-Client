@@ -23,10 +23,11 @@ public class BPInterface extends RSInterface {
         addText(44008, "- 3% drop rate boost", tda, 0, 0xcccccc, false, true);
         addText(44009, "- Higher CoX Rare Key Chance", tda, 0, 0xcccccc, false, true);
         addText(44010, "- Free Items: boost scroll set, random phat, 5 upgrade tokens", tda, 0, 0xcccccc, false, true);
+        addText(44013, "- Automatically bury bones from npc drops", tda, 0, 0xcccccc, false, true);
         hoverButton(44011, "Purchase", 180, 181, "Purchase", rsFont, 0xff8a1f, 0xff8a1f, true);
         addHoverButton(44012, "Interfaces/CollectionLog/CLOSE", 0, 16, 16, "Close", -1, 39003, 3);
 
-        inter.totalChildren(12);
+        inter.totalChildren(13);
         setBounds(44001, 4, 15, 0, inter);
         setBounds(44002, 80, 70, 1, inter);
         setBounds(44003, 230, 100, 2, inter);
@@ -37,11 +38,9 @@ public class BPInterface extends RSInterface {
         setBounds(44008, 48, 174, 7, inter);
         setBounds(44009, 48, 186, 8, inter);
         setBounds(44010, 48, 198, 9, inter);
+        setBounds(44013, 48, 210, 12, inter);
         setBounds(44011, 210, 240, 10, inter);
         setBounds(44012, 478, 28, 11, inter);
-
-
-
     }
 
 
