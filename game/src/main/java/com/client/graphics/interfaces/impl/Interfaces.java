@@ -32,6 +32,7 @@ public final class Interfaces extends RSInterface {
 
 	public static void loadInterfaces() {
  		fireofExchange(defaultTextDrawingAreas);
+		 battlepass(defaultTextDrawingAreas);
 		wrathRune();
 		new SettingsInterface().load(defaultTextDrawingAreas);
 		mysteryBox(defaultTextDrawingAreas);
@@ -131,6 +132,108 @@ public final class Interfaces extends RSInterface {
 		InterfaceLoader.INSTANCE.init();
 	}
 
+	public static void battlepass(TextDrawingArea[] tda) {
+		String dir = "Interfaces/battle_pass/SPRITE";
+		RSInterface main = addInterface(9000);
+		main.totalChildren(38);
+		addSprite(9001, 0, dir); //BG
+		main.child(0, 9001, 8, 7); //BG
+		addText(9002, 1, 0xFFA500, true, "Vanguard Battlepass", true); //TITLE
+		main.child(1, 9002, 255, 17); //TITLE
+		/* Free Battlepass Items */
+		addConfigSpriteNew(9102,dir, 7, 1, 0, 0);
+		main.child(3, 9102, 18 +76, 286);
+		addConfigSpriteNew(9103,dir, 7, 2, 0, 0);
+		main.child(4, 9103, 60 +76, 286);
+		addConfigSpriteNew(9104,dir, 7, 2, 0, 0);
+		main.child(5, 9104, 102 +76, 286);
+		addConfigSpriteNew(9105,dir, 7, 2, 0, 0);
+		main.child(6, 9105, 144 +76, 286);
+		addConfigSpriteNew(9106,dir, 7, 2, 0, 0);
+		main.child(7, 9106, 186 +76, 286);
+		addConfigSpriteNew(9107,dir, 7, 2, 0, 0);
+		main.child(8, 9107, 228 +76, 286);
+		addConfigSpriteNew(9108,dir, 7, 2, 0, 0);
+		main.child(9, 9108, 270 +76, 286);
+		addConfigSpriteNew(9109,dir, 7, 2, 0, 0);
+		main.child(10, 9109, 312 +76, 286);
+		addToItemGroup(9101, 8, 1, 10, 10, false, null, null, null);
+		main.child(11, 9101, 20 +76, 287);
+
+		addConfigSpriteNew(9112,dir, 1, 2, 0, 0);
+		main.child(12, 9112, 18 +76, 286 -40);
+		addConfigSpriteNew(9113,dir, 1, 2, 0, 0);
+		main.child(13, 9113, 60 +76, 286 -40);
+		addConfigSpriteNew(9114,dir, 1, 2, 0, 0);
+		main.child(14, 9114, 102 +76, 286 -40);
+		addConfigSpriteNew(9115,dir, 1, 2, 0, 0);
+		main.child(15, 9115, 144 +76, 286 -40);
+		addConfigSpriteNew(9116,dir, 1, 2, 0, 0);
+		main.child(16, 9116, 186 +76, 286 -40);
+		addConfigSpriteNew(9117,dir, 1, 2, 0, 0);
+		main.child(17, 9117, 228 +76, 286 -40);
+		addConfigSpriteNew(9118,dir, 1, 2, 0, 0);
+		main.child(18, 9118, 270 +76, 286 -40);
+		addConfigSpriteNew(9119,dir, 1, 2, 0, 0);
+		main.child(19, 9119, 312 +76, 286 -40);
+		addToItemGroup(9111, 8, 1, 10, 10, false, null, null, null);
+		main.child(20, 9111, 20 +76, 287 -40);
+
+		/* Back to 90## instead of 91## */
+		addButton(9003, 2, dir, "Previous Page");
+		main.child(21, 9003, 44, 274);
+		addButton(9004, 3, dir, "Next Page");
+		main.child(22, 9004, 431, 274);
+		main.child(23, 9006, 365, 58);
+		RSInterface scroll = addInterface(9006);
+		scroll.totalChildren(1);
+		scroll.width = 118;
+		scroll.height = 140;
+		scroll.scrollMax = 600;
+		addToItemGroup(9005, 3, 19, 10, 10, false, null, null, null); //Unclaimed Items
+		scroll.child(0, 9005, 0, 0);
+		addText(9007, 1, 0xFFA500, true, "Unclaimed Rewards", true);
+		main.child(24, 9007, 431, 41);
+		configHoverButtonTest(9008, "Claim Items", dir, 4, 5, 4, 5, false, 9008);
+		main.child(25, 9008, 396, 205);
+		addSprite(9009, 6, dir);
+		main.child(26, 9009, 412, 202);
+		/* 10/01/2024 */
+		addText(9010, 0, 0xFFA500, true, "Free Battlepass", true);
+		main.child(27, 9010, 275, 60);
+		addText(9011, 0, 0xFFA500, true, "Current Level: @gre@1", true);
+		main.child(28, 9011, 275, 75);
+		addText(9012, 0, 0xFFA500, true, "Current Experience: @gre@10000", true);
+		main.child(29, 9012, 275, 90);
+		addText(9013, 0, 0xFFA500, true, "Next Level in: @gre@10000", true);
+		main.child(30, 9013, 275, 105);
+
+		configHoverButtonTest(9014, "Purchase Premium", dir, 8, 9, 8, 9, false, 9014);
+		main.child(31, 9014, 199, 124);
+		addText(9015, 0, 0xFFA500, true, "Purchase Premium", true);
+		main.child(32, 9015, 275, 133);
+
+		configHoverButtonTest(9016, "Gift Premium", dir, 8, 9, 8, 9, false, 9014);
+		main.child(33, 9016, 199, 124+30);
+		addText(9017, 0, 0xFFA500, true, "Gift Premium", true);
+		main.child(34, 9017, 275, 133+30);
+
+		addText(9018, 0, 0xFFFFFF, true, "Viewing Page 1 - Levels 1 to 8", true);
+		main.child(35, 9018, 254, 230);
+
+		addText(9019, 0, 0xFFA500, true, "Time Remaining:@gre@ 31 Days", true);
+		main.child(36, 9019, 275, 133+30+30);
+
+		addText(9020, "Lorem ipsum dolor sit amet,\\n"
+						+ "consectetur adipiscing elit,\\n"
+						+ "sed do eiusmod tempor incididunt\\n"
+						+ "ut labore et dolore magna aliqua.\\n"
+						+ "fUt enim ad minim veniam, quis\\n"
+						+ "nostrud exercitation ullamco \\n"
+						+ "laboris nisi ut aliquip ex ea\\n" + "commodo consequat.",
+				tda, 1, 0xFF981F, true, true);
+		main.child(37, 9020, 109, 60);
+	}
 	public static void questInterface(TextDrawingArea[] TDA) {
 		RSInterface Interface = addInterface(8134);
 		Interface.centerText = true;
