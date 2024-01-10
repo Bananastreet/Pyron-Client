@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Configuration {
 
-    public static boolean LOCAL_HOST = true;
+    public static boolean LOCAL_HOST = false;
 
     public static String serverConnection = LOCAL_HOST ? "127.0.0.1" : "15.204.238.64";
     /**
