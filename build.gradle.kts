@@ -17,11 +17,14 @@ buildscript {
     }
 }
 
+val buildName = "normal"
+
 configure<com.mark.bootstrap.BootstrapPluginExtension> {
     uploadType.set(com.mark.bootstrap.UploadType.FTP)
-    buildType.set("normal")
-    customRepo.set("https://nexusrsps.com/rlclient/client/normal/repo")
-    passiveMode.set(false)
+    buildType.set(buildName)
+    customRepo.set("https://vanguardrsps.com/client/${buildName}/repo/")
+    passiveMode.set(true)
+    externalLibs.set(listOf(File("${rootProject.buildDir}\\libs\\")))
 }
 
 
@@ -55,4 +58,3 @@ tasks {
         destinationDirectory.set(file("${rootProject.buildDir}\\"))
     }
 }
-

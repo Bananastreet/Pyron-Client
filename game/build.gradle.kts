@@ -58,15 +58,11 @@ tasks {
     }
 
     jar {
-        File("${rootProject.buildDir}//bootstrap//normal//repo//")
         destinationDirectory.set(file("${rootProject.buildDir}\\libs\\"))
-        archiveBaseName.set(project.name)
-
-        manifest {
-            attributes["Implementation-Title"] = project.name
-            attributes["Implementation-Version"] = "${project.version}"
+        archiveBaseName.set("client")
+        from(sourceSets.main.get().resources) {
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         }
-
     }
 
 }

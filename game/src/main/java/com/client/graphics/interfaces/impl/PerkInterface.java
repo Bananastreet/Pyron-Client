@@ -48,7 +48,7 @@ public class PerkInterface extends RSInterface {
             setBounds(interfaceId++, buttonX + 51, buttonY + 6, childId++, widget);
         }
 
-        addText(interfaceId, "Tickets: ", font, 1, 0xFE981F, false, true);
+        addText(interfaceId, "Donator Tokens: ", font, 1, 0xFE981F, false, true);
         setBounds(interfaceId++, x + 339, y + 48, childId++, widget);
 
         addText(interfaceId, "" + interfaceId, font, 0, 0xbf751d, false, true);
@@ -70,8 +70,8 @@ public class PerkInterface extends RSInterface {
         addText(interfaceId, "", font, 0, 0xbf751d, true, true);
         setBounds(interfaceId++, x + 321, y + 246, childId++, widget);
 
-        addText(interfaceId, "Tickets can be earned or purchased", font, 0, 0xFE981F, false, true);
-        setBounds(interfaceId++, x + 273, y + 278, childId++, widget);
+        addText(interfaceId, "Donator Tokens can be purchased at ::store", font, 0, 0xFE981F, false, true);
+        setBounds(interfaceId++, x + 255, y + 278, childId++, widget);
 
         hoverButton(interfaceId, "Purchase", 180, 181, "", rsFont, 0xff8a1f, 0xff8a1f, true);
         //addHoverButton(interfaceId, "Interfaces/perks/IMAGE", 3, 102, 29, "Purchase", -1, interfaceId + 1, 1);

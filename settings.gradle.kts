@@ -11,6 +11,7 @@ dependencyResolutionManagement {
 }
 
 pluginManagement {
+
     repositories {
         gradlePluginPortal()
         maven("https://jitpack.io")
@@ -18,7 +19,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if(requested.id.toString() == "com.mark.bootstrap.bootstrap")
-                useModule("com.github.Mark7625:bootstrap-release:1676854127")
+                useModule("com.github.Mark7625:bootstrap-release:9457850336")
         }
     }
 }

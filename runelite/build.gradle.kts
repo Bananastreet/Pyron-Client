@@ -84,12 +84,6 @@ dependencies {
 tasks {
     jar {
         destinationDirectory.set(file("${rootProject.buildDir}\\libs\\"))
-        println("${rootProject.buildDir}\\libs\\${project.name}.jar")
         archiveBaseName.set(project.name)
-
-        manifest {
-            attributes["Implementation-Title"] = project.name
-            attributes["Implementation-Version"] = "${project.version}"
-        }
     }
 }

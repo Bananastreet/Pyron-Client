@@ -14,7 +14,7 @@ public class BPInterface extends RSInterface {
         RSInterface inter = addInterface(44000);
 
         addSprite(44001, 0, "Interfaces/Battlepass/BACKGROUND");
-        addText(44002, "Vanguard 2024 BATTLE PASS - 50 Donator Tokens", tda, 2, 0xff9933, false, true);
+        addText(44002, "Vanguard 2024 BATTLE PASS - 25 Donator Tokens", tda, 2, 0xff9933, false, true);
         addText(44003, "Benefits", tda, 1, 0x2FD458, false, true);
         addText(44004, "- Double Vote Crystals From Voting", tda, 0, 0xcccccc, false, true);
         addText(44005, "- Double cash from Vote Boss", tda, 0, 0xcccccc, false, true);
@@ -22,7 +22,7 @@ public class BPInterface extends RSInterface {
         addText(44007, "- Loot quantity from corrupt slayer keys doubled", tda, 0, 0xcccccc, false, true);
         addText(44008, "- 3% drop rate boost", tda, 0, 0xcccccc, false, true);
         addText(44009, "- Higher CoX Rare Key Chance", tda, 0, 0xcccccc, false, true);
-        addText(44010, "- Free Items: boost scroll set, random phat, 5 upgrade tokens", tda, 0, 0xcccccc, false, true);
+        addText(44010, "- Free Items: boost scroll set, random H'ween mask, 5 upgrade tokens", tda, 0, 0xcccccc, false, true);
         addText(44013, "- Automatically bury bones from npc drops", tda, 0, 0xcccccc, false, true);
         hoverButton(44011, "Purchase", 180, 181, "Purchase", rsFont, 0xff8a1f, 0xff8a1f, true);
         addHoverButton(44012, "Interfaces/CollectionLog/CLOSE", 0, 16, 16, "Close", -1, 39003, 3);
