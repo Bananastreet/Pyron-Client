@@ -14,7 +14,7 @@ public class Configuration {
      */
     public static final int CLIENT_VERSION = 35;
 
-    public static String SERVER_NAME = "Vanguard";
+    public static String SERVER_NAME = "Vanguard"; //will let it download updated cache then ill readd sprites
 
     /**
      * Cache version is written to the cache folder inside a version file.

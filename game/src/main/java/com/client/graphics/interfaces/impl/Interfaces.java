@@ -135,7 +135,7 @@ public final class Interfaces extends RSInterface {
 	public static void battlepass(TextDrawingArea[] tda) {
 		String dir = "Interfaces/battle_pass/SPRITE";
 		RSInterface main = addInterface(9000);
-		main.totalChildren(38);
+		main.totalChildren(39);
 		addSprite(9001, 0, dir); //BG
 		main.child(0, 9001, 8, 7); //BG
 		addText(9002, 1, 0xFFA500, true, "Vanguard Battlepass", true); //TITLE
@@ -233,6 +233,8 @@ public final class Interfaces extends RSInterface {
 						+ "laboris nisi ut aliquip ex ea\\n" + "commodo consequat.",
 				tda, 1, 0xFF981F, true, true);
 		main.child(37, 9020, 109, 60);
+		configHoverButtonNew(9021, "Close", "Interfaces/CollectionLog/CLOSE", 0, 1, 0, 1, false, 9021);
+		main.child(38, 9021, 488, 14);
 	}
 	public static void questInterface(TextDrawingArea[] TDA) {
 		RSInterface Interface = addInterface(8134);
