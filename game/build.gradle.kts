@@ -35,7 +35,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream
     implementation("com.thoughtworks.xstream:xstream:1.4.20")
 
-    val lombok = module("org.projectlombok", "lombok", "1.18.26")
+    val lombok = module("org.projectlombok", "lombok", "1.18.30")
     compileOnly(lombok)
     annotationProcessor(lombok)
     testCompileOnly(lombok)

@@ -7,7 +7,7 @@ kotlin {
 }
 
 dependencies {
-    val lombokVersion = "1.18.24"
+    val lombokVersion = "1.18.30"
     val slf4jVersion = "1.7.36"
     val lwjglVersion = "3.3.1"
     val lwjglClassifiers = arrayOf(
