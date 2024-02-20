@@ -1,78 +1,36 @@
 package com.client;
 
-import com.client.draw.widget.components.Background;
-import com.client.draw.widget.components.Divider;
-import com.client.draw.widget.components.Rasterizer;
-import com.client.graphics.loaders.SpriteLoader4;
-import com.client.hover.HoverMenuManager;
-import com.client.draw.ImageCache;
-import java.awt.*;
-import java.awt.Point;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.*;
-import java.lang.reflect.Method;
-import java.math.BigInteger;
-import java.net.*;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.Path;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.IntStream;
-
-import javax.swing.JFrame;
-
 import ch.qos.logback.classic.Level;
 import com.client.broadcast.Broadcast;
 import com.client.broadcast.BroadcastManager;
 import com.client.definitions.*;
 import com.client.definitions.server.ItemDef;
+import com.client.draw.ImageCache;
+import com.client.draw.widget.components.Background;
+import com.client.draw.widget.components.Divider;
+import com.client.draw.widget.components.Rasterizer;
+import com.client.engine.GameEngine;
 import com.client.engine.impl.KeyHandler;
 import com.client.engine.impl.MouseHandler;
-import com.client.features.settings.Preferences;
-import com.client.graphics.interfaces.Configs;
-import com.client.graphics.interfaces.daily.DailyRewards;
-import com.client.graphics.interfaces.eventcalendar.EventCalendar;
-import com.client.graphics.interfaces.impl.Autocast;
-import com.client.graphics.interfaces.impl.Bank;
-import com.client.graphics.interfaces.impl.DonatorRewards;
-import com.client.graphics.interfaces.impl.Interfaces;
-import com.client.graphics.interfaces.impl.MonsterDropViewer;
-import com.client.graphics.interfaces.impl.Nightmare;
-import com.client.graphics.interfaces.impl.QuestTab;
-import static com.client.SceneGraph.pitchRelaxEnabled;
-import static com.client.engine.impl.MouseHandler.clickMode3;
-
 import com.client.features.EntityTarget;
 import com.client.features.ExperienceDrop;
 import com.client.features.gametimers.GameTimer;
 import com.client.features.gametimers.GameTimerHandler;
 import com.client.features.settings.InformationFile;
+import com.client.features.settings.Preferences;
+import com.client.graphics.interfaces.Configs;
 import com.client.graphics.interfaces.RSInterface;
-import com.client.graphics.interfaces.impl.DropdownMenu;
-import com.client.graphics.interfaces.impl.GrandExchange;
-import com.client.graphics.interfaces.impl.Keybinding;
-import com.client.graphics.interfaces.impl.SpawnContainer;
+import com.client.graphics.interfaces.daily.DailyRewards;
+import com.client.graphics.interfaces.eventcalendar.EventCalendar;
+import com.client.graphics.interfaces.impl.*;
 import com.client.graphics.interfaces.settings.Setting;
 import com.client.graphics.interfaces.settings.SettingsInterface;
-import com.client.graphics.interfaces.impl.SettingsTabWidget;
-import com.client.graphics.interfaces.impl.Slider;
 import com.client.graphics.loaders.SpriteLoader1;
-import com.client.graphics.textures.TextureProvider;
 import com.client.graphics.loaders.SpriteLoader2;
 import com.client.graphics.loaders.SpriteLoader3;
+import com.client.graphics.loaders.SpriteLoader4;
+import com.client.graphics.textures.TextureProvider;
+import com.client.hover.HoverMenuManager;
 import com.client.model.Items;
 import com.client.script.ClientScripts;
 import com.client.sign.Signlink;
@@ -93,24 +51,49 @@ import dorkbox.util.ActionHandler;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Skill;
 import net.runelite.api.Tile;
+import net.runelite.api.*;
+import net.runelite.api.clan.ClanRank;
+import net.runelite.api.coords.LocalPoint;
+import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.*;
+import net.runelite.api.hooks.Callbacks;
+import net.runelite.api.hooks.DrawCallbacks;
+import net.runelite.api.vars.AccountType;
 import net.runelite.api.widgets.WidgetID;
+import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.rs.api.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.runelite.api.*;
-import net.runelite.api.clan.ClanRank;
-import net.runelite.api.coords.LocalPoint;
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.hooks.Callbacks;
-import net.runelite.api.hooks.DrawCallbacks;
-import net.runelite.api.vars.AccountType;
-import net.runelite.api.widgets.WidgetInfo;
-import net.runelite.rs.api.*;
-import com.client.engine.GameEngine;
+import javax.swing.*;
+import java.awt.Point;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.*;
+import java.lang.reflect.Method;
+import java.math.BigInteger;
+import java.net.*;
+import java.nio.file.Path;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Queue;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.IntStream;
+
+import static com.client.SceneGraph.pitchRelaxEnabled;
+import static com.client.engine.impl.MouseHandler.clickMode3;
 
 @Slf4j
 public class Client extends GameEngine implements RSClient {
@@ -1932,7 +1915,7 @@ public class Client extends GameEngine implements RSClient {
 						menuActionCmd3[menuActionRow] = class9_1.id;
 						menuActionRow++;
 					}
-					if (class9_1.atActionType == 6 && !aBoolean1149 && mouseX >= drawX && mouseY >= drawY && mouseX < drawX + class9_1.width
+					if (class9_1.atActionType == 6 && !hasClickedToContinue && mouseX >= drawX && mouseY >= drawY && mouseX < drawX + class9_1.width
 							&& mouseY < drawY + class9_1.height) {
 						HoverMenuManager.reset();
 						menuActionName[menuActionRow] = class9_1.tooltip;
@@ -1985,7 +1968,7 @@ public class Client extends GameEngine implements RSClient {
 						HoverMenuManager.reset();
 						anInt1315 = class9_1.id;
 					}
-					if (class9_1.atActionType == 8 && !aBoolean1149 && mouseX >= drawX && mouseY >= drawY && mouseX < drawX + class9_1.width
+					if (class9_1.atActionType == 8 && !hasClickedToContinue && mouseX >= drawX && mouseY >= drawY && mouseX < drawX + class9_1.width
 							&& mouseY < drawY + class9_1.height) {
 						HoverMenuManager.reset();
 						for (int s1 = 0; s1 < class9_1.tooltips.length; s1++) {
@@ -2000,7 +1983,7 @@ public class Client extends GameEngine implements RSClient {
 							menuActionRow++;
 						}
 					}
-					if (class9_1.atActionType == 9 && !aBoolean1149 && mouseX >= drawX && mouseY >= drawY && mouseX < drawX + class9_1.width
+					if (class9_1.atActionType == 9 && !hasClickedToContinue && mouseX >= drawX && mouseY >= drawY && mouseX < drawX + class9_1.width
 							&& mouseY < drawY + class9_1.height) {
 						HoverMenuManager.reset();
 						menuActionName[menuActionRow] = class9_1.tooltip;
@@ -2008,7 +1991,7 @@ public class Client extends GameEngine implements RSClient {
 						menuActionCmd3[menuActionRow] = class9_1.id;
 						menuActionRow++;
 					}
-					if (class9_1.atActionType == 10 && !aBoolean1149 && mouseX >= drawX && mouseY >= drawY && mouseX < drawX + class9_1.width
+					if (class9_1.atActionType == 10 && !hasClickedToContinue && mouseX >= drawX && mouseY >= drawY && mouseX < drawX + class9_1.width
 							&& mouseY < drawY + class9_1.height) {
 						HoverMenuManager.reset();
 						menuActionName[menuActionRow] = class9_1.getMenuItem().getText();
@@ -4670,7 +4653,7 @@ public class Client extends GameEngine implements RSClient {
 			calcCameraPos();
 		for (int i1 = 0; i1 < 5; i1++)
 			anIntArray1030[i1]++;
-		method73();
+		handleKeyboardButton();
 		++MouseHandler.idleCycles;
 		++KeyHandler.idleCycles;
 
@@ -5477,10 +5460,10 @@ public class Client extends GameEngine implements RSClient {
 			stream.method432(buttonPressed + baseY);
 			stream.writeWord(j + baseX);
 		}
-		if (l == 679 && !aBoolean1149) {
+		if (l == 679 && !hasClickedToContinue) {
 			stream.createFrame(40);
 			stream.writeWord(buttonPressed);
-			aBoolean1149 = true;
+			hasClickedToContinue = true;
 		}
 		if (l == Autocast.AUTOCAST_MENU_ACTION_ID) {
 			RSInterface button = RSInterface.get(buttonPressed);
@@ -7168,30 +7151,31 @@ public class Client extends GameEngine implements RSClient {
 		pmTabToReply(name);
 	}
 
-	private void method73() {
+	private void handleKeyboardButton() {
 		do {
-			int j = KeyHandler.instance.readChar();
+			int key = KeyHandler.instance.readChar();
 
-			if (j == -1)
+			if (key == -1)
 				break;
+
 			if(devConsole.console_open) {
-				devConsole.command_input(j);
+				devConsole.command_input(key);
 			} else if (openInterfaceID != -1 && openInterfaceID == reportAbuseInterfaceID) {
-				if (j == 8 && reportAbuseInput.length() > 0)
+				if (key == 8 && reportAbuseInput.length() > 0)
 					reportAbuseInput = reportAbuseInput.substring(0, reportAbuseInput.length() - 1);
-				if ((j >= 97 && j <= 122 || j >= 65 && j <= 90 || j >= 48 && j <= 57 || j == 32)
+				if ((key >= 97 && key <= 122 || key >= 65 && key <= 90 || key >= 48 && key <= 57 || key == 32)
 					&& reportAbuseInput.length() < 12)
-					reportAbuseInput += (char) j;
+					reportAbuseInput += (char) key;
 			} else if (messagePromptRaised) {
-				if (j >= 32 && j <= 122 && promptInput.length() < 80 && (!chatLocked)) {
-					promptInput += (char) j;
+				if (key >= 32 && key <= 122 && promptInput.length() < 80 && (!chatLocked)) {
+					promptInput += (char) key;
 					inputTaken = true;
 				}
-				if (j == 8 && promptInput.length() > 0) {
+				if (key == 8 && promptInput.length() > 0) {
 					promptInput = promptInput.substring(0, promptInput.length() - 1);
 					inputTaken = true;
 				}
-				if (j == 13 || j == 10) {
+				if (key == 13 || key == 10) {
 					messagePromptRaised = false;
 					inputTaken = true;
 					if (friendsListAction == 1) {
@@ -7252,20 +7236,20 @@ public class Client extends GameEngine implements RSClient {
 
 				}
 			} else if (inputDialogState == 1) {
-				if (j >= 48 && j <= 57 && amountOrNameInput.length() < 10) {
-					amountOrNameInput += (char) j;
+				if (key >= 48 && key <= 57 && amountOrNameInput.length() < 10) {
+					amountOrNameInput += (char) key;
 					inputTaken = true;
 				}
 				if ((!amountOrNameInput.toLowerCase().contains("k") && !amountOrNameInput.toLowerCase().contains("m")
-					&& !amountOrNameInput.toLowerCase().contains("b")) && (j == 107 || j == 109) || j == 98) {
-					amountOrNameInput += (char) j;
+					&& !amountOrNameInput.toLowerCase().contains("b")) && (key == 107 || key == 109) || key == 98) {
+					amountOrNameInput += (char) key;
 					inputTaken = true;
 				}
-				if (j == 8 && amountOrNameInput.length() > 0) {
+				if (key == 8 && amountOrNameInput.length() > 0) {
 					amountOrNameInput = amountOrNameInput.substring(0, amountOrNameInput.length() - 1);
 					inputTaken = true;
 				}
-				if (j == 13 || j == 10) {
+				if (key == 13 || key == 10) {
 					if (amountOrNameInput.length() > 0) {
 						if (amountOrNameInput.toLowerCase().contains("k")) {
 							amountOrNameInput = amountOrNameInput.replaceAll("k", "000");
@@ -7289,28 +7273,28 @@ public class Client extends GameEngine implements RSClient {
 					inputTaken = true;
 				}
 			} else if (Bank.isSearchingBank()) {
-				if (j >= 32 && j <= 122 && Bank.searchingBankString.length() < 58) {
-					Bank.searchingBankString += (char) j;
+				if (key >= 32 && key <= 122 && Bank.searchingBankString.length() < 58) {
+					Bank.searchingBankString += (char) key;
 					inputTaken = true;
 				}
-				if (j == 8 && Bank.searchingBankString.length() > 0) {
+				if (key == 8 && Bank.searchingBankString.length() > 0) {
 					Bank.searchingBankString = Bank.searchingBankString.substring(0, Bank.searchingBankString.length() - 1);
 					inputTaken = true;
 				}
-				if (j == 13 || j == 10) {
+				if (key == 13 || key == 10) {
 					inputDialogState = 0;
 					inputTaken = true;
 				}
 			} else if (inputDialogState == 2) {
-				if (j >= 32 && j <= 122 && amountOrNameInput.length() < 58) {
-					amountOrNameInput += (char) j;
+				if (key >= 32 && key <= 122 && amountOrNameInput.length() < 58) {
+					amountOrNameInput += (char) key;
 					inputTaken = true;
 				}
-				if (j == 8 && amountOrNameInput.length() > 0) {
+				if (key == 8 && amountOrNameInput.length() > 0) {
 					amountOrNameInput = amountOrNameInput.substring(0, amountOrNameInput.length() - 1);
 					inputTaken = true;
 				}
-				if (j == 13 || j == 10) {
+				if (key == 13 || key == 10) {
 					if (amountOrNameInput.length() > 0) {
 						stream.createFrame(60);
 						stream.writeUnsignedByte(amountOrNameInput.length() + 1);
@@ -7320,33 +7304,33 @@ public class Client extends GameEngine implements RSClient {
 					inputTaken = true;
 				}
 			} else if (inputDialogState == 3) {
-				if (j == 10) {
+				if (key == 10) {
 					inputDialogState = 0;
 					inputTaken = true;
 				}
-				if (j >= 32 && j <= 122 && amountOrNameInput.length() < 40) {
-					amountOrNameInput += (char) j;
+				if (key >= 32 && key <= 122 && amountOrNameInput.length() < 40) {
+					amountOrNameInput += (char) key;
 					inputTaken = true;
 				}
-				if (j == 8 && amountOrNameInput.length() > 0) {
+				if (key == Keys.BACKSPACE && amountOrNameInput.length() > 0) {
 					amountOrNameInput = amountOrNameInput.substring(0, amountOrNameInput.length() - 1);
 					inputTaken = true;
 				}
 			} else if (inputDialogState == 7) {
-				if (j >= 48 && j <= 57 && amountOrNameInput.length() < 10) {
-					amountOrNameInput += (char) j;
+				if (key >= 48 && key <= 57 && amountOrNameInput.length() < 10) {
+					amountOrNameInput += (char) key;
 					inputTaken = true;
 				}
 				if ((!amountOrNameInput.toLowerCase().contains("k") && !amountOrNameInput.toLowerCase().contains("m")
-					&& !amountOrNameInput.toLowerCase().contains("b")) && (j == 107 || j == 109) || j == 98) {
-					amountOrNameInput += (char) j;
+					&& !amountOrNameInput.toLowerCase().contains("b")) && (key == 107 || key == 109) || key == 98) {
+					amountOrNameInput += (char) key;
 					inputTaken = true;
 				}
-				if (j == 8 && amountOrNameInput.length() > 0) {
+				if (key == 8 && amountOrNameInput.length() > 0) {
 					amountOrNameInput = amountOrNameInput.substring(0, amountOrNameInput.length() - 1);
 					inputTaken = true;
 				}
-				if (j == 13 || j == 10) {
+				if (key == 13 || key == 10) {
 					if (amountOrNameInput.length() > 0) {
 						if (amountOrNameInput.toLowerCase().contains("k")) {
 							amountOrNameInput = amountOrNameInput.replaceAll("k", "000");
@@ -7369,20 +7353,20 @@ public class Client extends GameEngine implements RSClient {
 					inputTaken = true;
 				}
 			} else if (inputDialogState == 8) {
-				if (j >= 48 && j <= 57 && amountOrNameInput.length() < 10) {
-					amountOrNameInput += (char) j;
+				if (key >= 48 && key <= 57 && amountOrNameInput.length() < 10) {
+					amountOrNameInput += (char) key;
 					inputTaken = true;
 				}
 				if ((!amountOrNameInput.toLowerCase().contains("k") && !amountOrNameInput.toLowerCase().contains("m")
-					&& !amountOrNameInput.toLowerCase().contains("b")) && (j == 107 || j == 109) || j == 98) {
-					amountOrNameInput += (char) j;
+					&& !amountOrNameInput.toLowerCase().contains("b")) && (key == 107 || key == 109) || key == 98) {
+					amountOrNameInput += (char) key;
 					inputTaken = true;
 				}
-				if (j == 8 && amountOrNameInput.length() > 0) {
+				if (key == 8 && amountOrNameInput.length() > 0) {
 					amountOrNameInput = amountOrNameInput.substring(0, amountOrNameInput.length() - 1);
 					inputTaken = true;
 				}
-				if (j == 13 || j == 10) {
+				if (key == 13 || key == 10) {
 					if (amountOrNameInput.length() > 0) {
 						if (amountOrNameInput.toLowerCase().contains("k")) {
 							amountOrNameInput = amountOrNameInput.replaceAll("k", "000");
@@ -7406,20 +7390,20 @@ public class Client extends GameEngine implements RSClient {
 					if (rsi == null) {
 						return;
 					}
-					if (j >= 32 && j <= 122 && rsi.message.length() < rsi.characterLimit) {
+					if (key >= 32 && key <= 122 && rsi.message.length() < rsi.characterLimit) {
 						if (rsi.inputRegex.length() > 0) {
 							pattern = Pattern.compile(rsi.inputRegex);
-							matcher = pattern.matcher(Character.toString(((char) j)));
+							matcher = pattern.matcher(Character.toString(((char) key)));
 							if (matcher.matches()) {
-								rsi.message += (char) j;
+								rsi.message += (char) key;
 								inputTaken = true;
 							}
 						} else {
-							rsi.message += (char) j;
+							rsi.message += (char) key;
 							inputTaken = true;
 						}
 					}
-					if (j == 8 && rsi.message.length() > 0) {
+					if (key == Keys.BACKSPACE && rsi.message.length() > 0) {
 						rsi.message = rsi.message.substring(0, rsi.message.length() - 1);
 						if (rsi.inputFieldListener != null)
 							rsi.inputFieldListener.accept(rsi.message);
@@ -7453,7 +7437,7 @@ public class Client extends GameEngine implements RSClient {
 								}
 							}
 						}
-					} else if (rsi.updatesEveryInput && rsi.message.length() > 0 && j != 10 && j != 13) {
+					} else if (rsi.updatesEveryInput && rsi.message.length() > 0 && key != 10 && key != 13) {
 						SpawnContainer.get().update(rsi.message);
 						if (rsi.inputFieldListener != null)
 							rsi.inputFieldListener.accept(rsi.message);
@@ -7466,7 +7450,7 @@ public class Client extends GameEngine implements RSClient {
 							stream.writeString(rsi.message);
 							return;
 						}
-					} else if ((j == 10 || j == 13) && rsi.message.length() > 0 && !rsi.updatesEveryInput) {
+					} else if ((key == 10 || key == 13) && rsi.message.length() > 0 && !rsi.updatesEveryInput) {
 						inputString = "";
 						promptInput = "";
 						if (rsi.inputFieldListener != null)
@@ -7481,18 +7465,18 @@ public class Client extends GameEngine implements RSClient {
 						}
 					}
 				} else {
-					if (j >= 32 && j <= 122 && inputString.length() < 80 && (!chatLocked)) {
-						inputString += (char) j;
+					if (key >= 32 && key <= 122 && inputString.length() < 80 && (!chatLocked)) {
+						inputString += (char) key;
 						inputTaken = true;
 					}
-					if (j == 8 && inputString.length() > 0) {
+					if (key == 8 && inputString.length() > 0) {
 						inputString = inputString.substring(0, inputString.length() - 1);
 						inputTaken = true;
 					}
-					if (j == 9)
+					if (key == 9)
 						pmTabToReply();
 
-					if ((j == 13 || j == 10) && inputString.length() > 0) {
+					if ((key == 13 || key == 10) && inputString.length() > 0) {
 						if (inputString.startsWith("::")) {
 							inputString = inputString.toLowerCase();
 						}
@@ -7542,13 +7526,13 @@ public class Client extends GameEngine implements RSClient {
 						if (inputString.equals("::togglecounter"))
 							drawExperienceCounter = !drawExperienceCounter;
 
-						if (inputString.equals("::resetcounter") && (j == 13 || j == 10)) {
+						if (inputString.equals("::resetcounter") && (key == 13 || key == 10)) {
 							stream.createFrame(185);
 							stream.writeWord(-1);
 							experienceCounter = 0L;
 						}
 
-						if (inputString.equals("::snow") && (j == 13 || j == 10) && Configuration.CHRISTMAS) {
+						if (inputString.equals("::snow") && (key == 13 || key == 10) && Configuration.CHRISTMAS) {
 							snowVisible = snowVisible ? false : true;
 							pushMessage("The snow has been set to " + (snowVisible ? "visible" : "invisible") + ".", 0,
 								"");
@@ -7837,7 +7821,7 @@ public class Client extends GameEngine implements RSClient {
 								}
 							}
 
-							if (inputString.equals("::packrsi") && (j == 13 || j == 10)) {
+							if (inputString.equals("::packrsi") && (key == 13 || key == 10)) {
 								// TextDrawingArea aTextDrawingArea_1273 = new
 								// TextDrawingArea(true, "q8_full" + fontFilter(),
 								// titleStreamLoader);
@@ -7955,8 +7939,122 @@ public class Client extends GameEngine implements RSClient {
 						inputTaken = true;
 					}
 				}
+			} else {
+				// Check on Options
+				if(getCurrentOpenDialog() == 2459) { // Dialog with 2 options
+					if(key == Keys.NUM_1) {
+						sendClickingButton(2461);
+						setInterfaceText(2461, "Please wait...");
+					} else if(key == Keys.NUM_2) {
+						sendClickingButton(2462);
+						setInterfaceText(2462, "Please wait...");
+					}
+				}
+
+				// Check on yes/no interface
+				if(getCurrentOpenDialog() == 14170) { // check on yes/no option
+					if(key == Keys.NUM_1) {
+						sendClickingButton(14175);
+						setInterfaceText(14175, "...");
+					} else if(key == Keys.NUM_2) {
+						sendClickingButton(14176);
+						setInterfaceText(14176, "...");
+					}
+				}
+
+				if(getCurrentOpenDialog() == 2469) { // Dialog with 3 options
+					if(key == Keys.NUM_1) {
+						sendClickingButton(2471);
+						setInterfaceText(2471, "Please wait...");
+					} else if(key == Keys.NUM_2) {
+						sendClickingButton(2472);
+						setInterfaceText(2472, "Please wait...");
+					} else if(key == Keys.NUM_3) {
+						sendClickingButton(2473);
+						setInterfaceText(2473, "Please wait...");
+					}
+				}
+
+				if(getCurrentOpenDialog() == 2480) { // Dialog with 4 options
+					if(key == Keys.NUM_1) {
+						sendClickingButton(2482);
+						setInterfaceText(2482, "Please wait...");
+					} else if(key == Keys.NUM_2) {
+						sendClickingButton(2483);
+						setInterfaceText(2483, "Please wait...");
+					} else if(key == Keys.NUM_3) {
+						sendClickingButton(2484);
+						setInterfaceText(2484, "Please wait...");
+					} else if(key == Keys.NUM_4) {
+						sendClickingButton(2485);
+						setInterfaceText(2485, "Please wait...");
+					}
+				}
+
+				if(getCurrentOpenDialog() == 2492) { // Dialog with 5 options
+					if(key == Keys.NUM_1) {
+						sendClickingButton(2494);
+						setInterfaceText(2494, "Please wait...");
+					} else if(key == Keys.NUM_2) {
+						sendClickingButton(2495);
+						setInterfaceText(2495, "Please wait...");
+					} else if(key == Keys.NUM_3) {
+						sendClickingButton(2496);
+						setInterfaceText(2496, "Please wait...");
+					} else if(key == Keys.NUM_4) {
+						sendClickingButton(2497);
+						setInterfaceText(2497, "Please wait...");
+					} else if(key == Keys.NUM_5) {
+						sendClickingButton(2498);
+						setInterfaceText(2498, "Please wait...");
+					}
+				}
+
+				if(getCurrentOpenDialog() == 28900) { // Dialog with 5 options
+					if(key == Keys.NUM_1) {
+						sendClickingButton(28911);
+						setInterfaceText(28911, "Please wait...");
+					} else if(key == Keys.NUM_2) {
+						sendClickingButton(28912);
+						setInterfaceText(28912, "Please wait...");
+					} else if(key == Keys.NUM_3) {
+						sendClickingButton(28913);
+						setInterfaceText(28913, "Please wait...");
+					} else if(key == Keys.NUM_4) {
+						sendClickingButton(28914);
+						setInterfaceText(28914, "Please wait...");
+					} else if(key == Keys.NUM_5) {
+						sendClickingButton(28915);
+						setInterfaceText(28915, "Please wait...");
+					} else if(key == Keys.NUM_6) {
+						sendClickingButton(28916);
+						setInterfaceText(28916, "Please wait...");
+					} else if(key == Keys.NUM_7) {
+						sendClickingButton(28917);
+						setInterfaceText(28917, "Please wait...");
+					} else if(key == Keys.NUM_8) {
+						sendClickingButton(28918);
+						setInterfaceText(28918, "Please wait...");
+					} else if(key == Keys.NUM_9) {
+						sendClickingButton(28919);
+						setInterfaceText(28919, "Please wait...");
+					}
+				}
 			}
 		} while (true);
+	}
+
+	private int getCurrentOpenDialog() {
+		return backDialogID;
+	}
+
+	private void setInterfaceText(int interfaceId, String text) {
+		RSInterface.interfaceCache[interfaceId].defaultInputFieldText = text;
+	}
+
+	private void sendClickingButton(int buttonId) {
+		stream.createFrame(185);
+		stream.writeWord(buttonId);
 	}
 
 	public static String formatCoins(long amount) {
@@ -9743,7 +9841,7 @@ public class Client extends GameEngine implements RSClient {
 				openInterfaceID = -1;
 				invOverlayInterfaceID = 0;
 				openWalkableWidgetID = -1;
-				aBoolean1149 = false;
+				hasClickedToContinue = false;
 				tabID = 3;
 				inputDialogState = 0;
 				menuOpen = false;
@@ -12222,7 +12320,7 @@ public class Client extends GameEngine implements RSClient {
 										i4 = 16777215;
 								}
 							}
-							if (class9_1.atActionType == 6 && aBoolean1149) {
+							if (class9_1.atActionType == 6 && hasClickedToContinue) {
 								s = "Please wait...";
 								i4 = 255;
 							}
@@ -12358,7 +12456,7 @@ public class Client extends GameEngine implements RSClient {
 										i4 = 16777215;
 								}
 							}
-							if (class9_1.atActionType == 6 && aBoolean1149) {
+							if (class9_1.atActionType == 6 && hasClickedToContinue) {
 								s = "Please wait...";
 								i4 = 255;
 							}
@@ -16178,7 +16276,7 @@ public class Client extends GameEngine implements RSClient {
 		invOverlayInterfaceID = sideInterfaceID;
 		needDrawTabArea = true;
 		tabAreaAltered = true;
-		aBoolean1149 = false;
+		hasClickedToContinue = false;
 	}
 
 	private int groundItemValueLimit = 7_000;
@@ -17153,7 +17251,7 @@ public class Client extends GameEngine implements RSClient {
 					invOverlayInterfaceID = k12;
 					needDrawTabArea = true;
 					tabAreaAltered = true;
-					aBoolean1149 = false;
+					hasClickedToContinue = false;
 					incomingPacket = -1;
 					return true;
 
@@ -17280,7 +17378,7 @@ public class Client extends GameEngine implements RSClient {
 					needDrawTabArea = true;
 					tabAreaAltered = true;
 					openInterfaceID = -1;
-					aBoolean1149 = false;
+					hasClickedToContinue = false;
 					incomingPacket = -1;
 					return true;
 
@@ -17643,7 +17741,7 @@ public class Client extends GameEngine implements RSClient {
 
 
 					openInterfaceID = interfaceId;
-					aBoolean1149 = false;
+					hasClickedToContinue = false;
 					incomingPacket = -1;
 					return true;
 
@@ -17754,7 +17852,7 @@ public class Client extends GameEngine implements RSClient {
 					}
 					fullscreenInterfaceID = -1;
 					openInterfaceID = -1;
-					aBoolean1149 = false;
+					hasClickedToContinue = false;
 					incomingPacket = -1;
 					return true;
 
@@ -17836,7 +17934,7 @@ public class Client extends GameEngine implements RSClient {
 					backDialogID = j9;
 					inputTaken = true;
 					openInterfaceID = -1;
-					aBoolean1149 = false;
+					hasClickedToContinue = false;
 					incomingPacket = -1;
 					return true;
 
@@ -18097,13 +18195,13 @@ public class Client extends GameEngine implements RSClient {
 		if (invOverlayInterfaceID != 0) {
 			invOverlayInterfaceID = 0;
 			needDrawTabArea = true;
-			aBoolean1149 = false;
+			hasClickedToContinue = false;
 			tabAreaAltered = true;
 		}
 		if (backDialogID != -1) {
 			backDialogID = -1;
 			inputTaken = true;
-			aBoolean1149 = false;
+			hasClickedToContinue = false;
 		}
 		openInterfaceID = -1;
 		fullscreenInterfaceID = -1;
@@ -18223,7 +18321,7 @@ public class Client extends GameEngine implements RSClient {
 		constructRegionData = new int[4][13][13];
 		mapIconSprite = new Sprite[1000];
 		inTutorialIsland = false;
-		aBoolean1149 = false;
+		hasClickedToContinue = false;
 		crosses = new Sprite[8];
 		musicEnabled = true;
 		needDrawTabArea = false;
@@ -18566,7 +18664,7 @@ public class Client extends GameEngine implements RSClient {
 	private boolean inTutorialIsland;
 	private static int anInt1142;
 	private int energy;
-	private boolean aBoolean1149;
+	private boolean hasClickedToContinue;
 	private Sprite[] crosses;
 	private boolean musicEnabled;
 	private IndexedImage[] aBackgroundArray1152s;

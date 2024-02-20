@@ -57,6 +57,11 @@ public final class KeyHandler implements KeyListener, FocusListener, RSKeyHandle
         }
     }
 
+    public static void sendClickingButton(int buttonId) {
+        Client.stream.createFrame(185);
+        Client.stream.writeWord(buttonId);
+    }
+
     @Override
     public void keyPressed(KeyEvent event) {
         idleCycles = 0;
@@ -84,30 +89,11 @@ public final class KeyHandler implements KeyListener, FocusListener, RSKeyHandle
             }
         }
 
-
         if (i == 192 && Client.localPlayer != null && Client.localPlayer.isAdminRights()) {
             Client.instance.devConsole.console_open = !Client.instance.devConsole.console_open;
         }
 
         if (event.isControlDown()) {
-            if (i == KeyEvent.VK_SPACE) {
-                Client.continueDialogue();
-            }
-            if (i == KeyEvent.VK_1 || i == KeyEvent.VK_NUMPAD1) {
-                Client.dialogueOptions("one");
-            }
-            if (i == KeyEvent.VK_2 || i == KeyEvent.VK_NUMPAD2) {
-                Client.dialogueOptions("two");
-            }
-            if (i == KeyEvent.VK_3 || i == KeyEvent.VK_NUMPAD3) {
-                Client.dialogueOptions("three");
-            }
-            if (i == KeyEvent.VK_4 || i == KeyEvent.VK_NUMPAD4) {
-                Client.dialogueOptions("four");
-            }
-            if (i == KeyEvent.VK_5 || i == KeyEvent.VK_NUMPAD5) {
-                Client.dialogueOptions("five");
-            }
             switch (i) {
                 case KeyEvent.VK_V:
                     Client.inputString += Client.getClipboardContents();
