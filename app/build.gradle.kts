@@ -14,8 +14,10 @@ dependencies {
     implementation(project(":game"))
 }
 
+val main_class_name: String by project
+
 application {
-    mainClass.set("net.runelite.client.RuneLite")
+    mainClass.set(main_class_name)
 }
 
 tasks {

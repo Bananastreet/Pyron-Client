@@ -1,16 +1,11 @@
 package com.client;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.client.sign.Signlink;
+
+import java.io.*;
 import java.net.Socket;
 import java.util.zip.CRC32;
 import java.util.zip.GZIPInputStream;
-
-import com.client.sign.Signlink;
 
 public final class OnDemandFetcher extends OnDemandFetcherParent implements Runnable {
 
@@ -427,7 +422,7 @@ public final class OnDemandFetcher extends OnDemandFetcherParent implements Runn
 			} while (true);
 		} catch (IOException _ex) {
 			// RuntimeException("error unzipping");
-			System.err.println("Failed to unzip [" + onDemandData.ID + "] type = " + onDemandData.dataType);
+			System.err.println("Failed to unzip [" + onDemandData.ID + "] type = " + onDemandData.dataType + ", had " + (onDemandData.buffer == null ? -1 : onDemandData.buffer.length) + " bytes");
 			_ex.printStackTrace();
 			return null;
 		}

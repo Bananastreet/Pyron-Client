@@ -4156,7 +4156,9 @@ public class Client extends GameEngine implements RSClient {
 				onDemandData = resourceProvider.getNextNode();
 				if (onDemandData == null)
 					return;
+
 				if (onDemandData.dataType == 0) {
+					//System.out.println("loading model " + onDemandData.ID + " of " + onDemandData.buffer.length + " bytes");
 					Model.loadModel(onDemandData.buffer, onDemandData.ID);
 					needDrawTabArea = true;
 					if (backDialogID != -1)

@@ -20,7 +20,7 @@ public class Configuration {
      * Cache version is written to the cache folder inside a version file.
      * This is read on startup to tell if the cache is out of date or not.
      */
-    public static final int CACHE_VERSION = 6; // Set this to the same value, v0.030 = 30, v1.120 = 1120
+    public static final int CACHE_VERSION = 7; // Set this to the same value, v0.030 = 30, v1.120 = 1120
 
     public static final String CACHE_LINK = "https://pyron.b-cdn.net/cache.zip";
 

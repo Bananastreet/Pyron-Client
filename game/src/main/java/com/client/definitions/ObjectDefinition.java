@@ -1,45 +1,42 @@
 package com.client.definitions;
 
-import java.io.FileWriter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.client.*;
 import net.runelite.api.IterableHashTable;
 import net.runelite.rs.api.RSBuffer;
 import net.runelite.rs.api.RSIterableNodeHashTable;
 import net.runelite.rs.api.RSObjectComposition;
 import org.apache.commons.lang3.StringUtils;
 
-import com.client.Frame;
-import com.client.Client;
-import com.client.ReferenceCache;
-import com.client.Model;
-import com.client.OnDemandFetcher;
-import com.client.Buffer;
-import com.client.FileArchive;
+import java.io.FileWriter;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class ObjectDefinition implements RSObjectComposition {
 
 
-	public static ObjectDefinition lookup(int i) {
-		if (i > streamIndices.length)
-			i = streamIndices.length - 2;
+	public static ObjectDefinition lookup(int id) {
+		if (id >= streamIndices.length) {
+			id = streamIndices.length - 1;
+		}
 
-		if (i == 25913 || i == 25916 || i == 25917)
-			i = 15552;
+		if (id == 25913 || id == 25916 || id == 25917)
+			id = 15552;
 
 		for (int j = 0; j < 20; j++)
-			if (cache[j].type == i)
+			if (cache[j].type == id)
 				return cache[j];
 
 		cacheIndex = (cacheIndex + 1) % 20;
+
 		ObjectDefinition objectDef = cache[cacheIndex];
-		stream.currentPosition = streamIndices[i];
-		objectDef.type = i;
+		stream.currentPosition = streamIndices[id];
+
+		objectDef.type = id;
 		objectDef.setDefaults();
 		objectDef.decode(stream);
-		if (i >= 26281 && i <= 26290) {
+
+		if (id >= 26281 && id <= 26290) {
 			objectDef.actions = new String[] { "Choose", null, null, null, null };
 		}
 
@@ -47,7 +44,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 //			objectDef.sizeX = 2;
 //			objectDef.sizeY = 3;
 //		}
-		switch (i) {
+		switch (id) {
 			case 42854: //nex area chest
 				objectDef.name = "Bank Chest";
 				objectDef.actions = new String[] { "Use", null, null, null, null };
@@ -508,7 +505,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 		try {
 			FileWriter fw = new FileWriter("./temp/" + "object_data.json");
 			fw.write("[\n");
-			for (int i = 0; i < totalObjects; i++) {
+			for (int i = 0; i <= highestObjectId; i++) {
 				ObjectDefinition def = ObjectDefinition.lookup(i);
 				String output = "[\"" + StringUtils.join(def.actions, "\", \"") + "\"],";
 
@@ -583,18 +580,24 @@ public final class ObjectDefinition implements RSObjectComposition {
 		stream = null;
 	}
 
-	public static int totalObjects;
+	public static int highestObjectId;
 
 	public static void init(FileArchive streamLoader) {
 		stream = new Buffer(streamLoader.getDataForName("loc.dat"));
-		Buffer stream = new Buffer(streamLoader.getDataForName("loc.idx"));
-		totalObjects = stream.readUShort();
-		streamIndices = new int[totalObjects];
-		int i = 2;
-		for (int j = 0; j < totalObjects; j++) {
-			streamIndices[j] = i;
-			i += stream.readUShort();
+		Buffer idx = new Buffer(streamLoader.getDataForName("loc.idx"));
+
+		highestObjectId = idx.readUShort();
+		streamIndices = new int[highestObjectId + 15_000];
+
+		int offset = 0;
+		for (int i = 0; i <= highestObjectId; i++) {
+			final int size = idx.readUShort();
+			if (size == 65535) break;
+
+			streamIndices[i] = offset;
+			offset += size;
 		}
+
 		cache = new ObjectDefinition[20];
 		for (int k = 0; k < 20; k++)
 			cache[k] = new ObjectDefinition();
@@ -788,29 +791,26 @@ public final class ObjectDefinition implements RSObjectComposition {
 	public int anInt2083;
 	private Map<Integer, Object> params = null;
 
-	public void decode(Buffer buffer) {
+	public void decode(final Buffer buffer) {
+		int lastOpcode = -1;
 		while(true) {
-			int opcode = buffer.readUnsignedByte();
+			final int opcode = buffer.readUnsignedByte();
 
 			if (opcode == 0) {
 				break;
 			} else if (opcode == 1) {
 				int len = buffer.readUnsignedByte();
 				if (len > 0) {
-					if (objectModels == null) {
-						objectTypes = new int[len];
-						objectModels = new int[len];
+					objectTypes = new int[len];
+					objectModels = new int[len];
 
-						for (int i = 0; i < len; i++) {
-							objectModels[i] = buffer.readUShort();
-							objectTypes[i] = buffer.readUnsignedByte();
-						}
-					} else {
-						buffer.currentPosition += len * 3;
+					for (int i = 0; i < len; i++) {
+						objectModels[i] = buffer.readUShort();
+						objectTypes[i] = buffer.readUnsignedByte();
 					}
 				}
 			} else if (opcode == 2) {
-				name = buffer.readString();
+				name = buffer.readStringCp1252NullTerminated();
 			} else if (opcode == 5) {
 				int len = buffer.readUnsignedByte();
 				if (len > 0) {
@@ -845,6 +845,8 @@ public final class ObjectDefinition implements RSObjectComposition {
 				if (animation == 0xFFFF) {
 					animation = -1;
 				}
+			} else if (opcode == 27) {
+				// interactType = 1
 			} else if (opcode == 28) {
 				decorDisplacement = buffer.readUnsignedByte();
 			} else if (opcode == 29) {
@@ -855,7 +857,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 				if (actions == null) {
 					actions = new String[5];
 				}
-				actions[opcode - 30] = buffer.readString();
+				actions[opcode - 30] = buffer.readStringCp1252NullTerminated();
 				if (actions[opcode - 30].equalsIgnoreCase("Hidden")) {
 					actions[opcode - 30] = null;
 				}
@@ -909,7 +911,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 			} else if (opcode == 79) {
 				anInt2112 = buffer.readUShort();
 				anInt2113 = buffer.readUShort();
-				anInt2083 = buffer.readUShort();
+				anInt2083 = buffer.readUnsignedByte();
 
 				int length = buffer.readUnsignedByte();
 				int[] anims = new int[length];
@@ -969,7 +971,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 					Object value;
 
 					if (isString) {
-						value = buffer.readString();
+						value = buffer.readStringCp1252NullTerminated();
 						System.out.println(value);
 					} else {
 						value = buffer.readInt();
@@ -980,9 +982,12 @@ public final class ObjectDefinition implements RSObjectComposition {
 
 				this.params = params;
 			} else {
-
+				throw new IllegalArgumentException("(type " + type + ") Unknown opcode=" + opcode
+						+ ", last=" + lastOpcode
+						+ " for name \"" + name + "\"");
 			}
 
+			lastOpcode = opcode;
 		}
 
 		if (name != null && !name.equals("null")) {
