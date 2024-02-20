@@ -1105,8 +1105,9 @@ public final class ItemDefinition implements RSItemComposition {
                 itemDef.colorReplace = new int[]{16, 20, 24, 28, 33, 37, 41, 49, 3127, 57, 3140, 142, 156, 284, 836};
                 itemDef.colorFind = new int[]{6073, 20, 6055, 28, 6073, 6055, 41, 156, 6073, 57, 6073, 142, 156, 284, 6073};
                 break;
-            case 5020: //perk ticket
-                itemDef.name = "Perk ticket";
+            case 5020: //battlepass giftcard
+                itemDef.name = "Battlepass Giftcard";
+                itemDef.interfaceOptions = new String[]{"Claim", null, null, null, "Drop"};
                 itemDef.stackable = true;
                 break;
             case 25527: //Stardust
@@ -1360,7 +1361,7 @@ public final class ItemDefinition implements RSItemComposition {
                 itemDef.interfaceOptions = new String[]{null, null, null, null, null};
                 break;
             case 26146:
-                itemDef.name = "Sigil of Vanguard";
+                itemDef.name = "Sigil of Pyron";
                 itemDef.interfaceOptions = new String[]{null, null, null, null, null};
                 break;
             case 26017:
@@ -1436,6 +1437,7 @@ public final class ItemDefinition implements RSItemComposition {
                 break;
             case 7478:
                 itemDef.name = "Donator Token";
+                itemDef.interfaceOptions = new String[]{"Open Shop", null, null, null, "Drop"};
                 break;
             case 2841:
                 itemDef.name = "@red@Bonus Exp Scroll";
@@ -1852,7 +1854,7 @@ public final class ItemDefinition implements RSItemComposition {
                 itemDef.interfaceOptions = new String[]{"Open", null, "Open-All", null, "Drop"};
                 break;
             case 22316:
-                itemDef.name = "Sword of Vanguard";
+                itemDef.name = "Sword of Pyron";
                 break;
             case 19942:
                 itemDef.name = "Lil Mimic";

@@ -56,7 +56,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 				objectDef.actions = new String[]{ "Enter", null, null, null, null};
 				break;
 			case 36062:
-				objectDef.description = "Teleports you anywhere around Vanguard.";
+				objectDef.description = "Teleports you anywhere around Pyron.";
 				objectDef.actions = new String[] { "Activate", "Previous Location", null, null, null };
 				break;
 			case 4152:
@@ -160,7 +160,7 @@ public final class ObjectDefinition implements RSObjectComposition {
 				objectDef.name = "@pur@Platinum Altar";
 				break;
 			case 29064:
-				objectDef.name = "Vanguard Leaderboards";
+				objectDef.name = "Pyron Leaderboards";
 				objectDef.actions = new String[] { "View", null, null, null, null };
 				break;
 			case 33320:

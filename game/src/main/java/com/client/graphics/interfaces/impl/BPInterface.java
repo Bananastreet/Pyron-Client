@@ -14,7 +14,7 @@ public class BPInterface extends RSInterface {
         RSInterface inter = addInterface(44000);
 
         addSprite(44001, 0, "Interfaces/Battlepass/BACKGROUND");
-        addText(44002, "Vanguard 2024 BATTLE PASS - 25 Donator Tokens", tda, 2, 0xff9933, false, true);
+        addText(44002, "Pyron 2024 BATTLE PASS - 25 Donator Tokens", tda, 2, 0xff9933, false, true);
         addText(44003, "Benefits", tda, 1, 0x2FD458, false, true);
         addText(44004, "- Double Vote Crystals From Voting", tda, 0, 0xcccccc, false, true);
         addText(44005, "- Double cash from Vote Boss", tda, 0, 0xcccccc, false, true);

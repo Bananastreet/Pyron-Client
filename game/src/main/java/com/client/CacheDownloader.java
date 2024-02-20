@@ -27,7 +27,7 @@ public class CacheDownloader {
 
 	private Client client;
 
-	private static final int BUFFER = 1024;
+	private static final int BUFFER = 65535;
 
 	private Path fileLocation;
 

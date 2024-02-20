@@ -6,7 +6,7 @@ public class Configuration {
 
     public static boolean LOCAL_HOST = false;
 
-    public static String serverConnection = LOCAL_HOST ? "127.0.0.1" : "15.204.238.64";
+    public static String serverConnection = "51.68.213.221";
     /**
      * Client version is a number that will tell the server whether
      * the player has the most up-to-date client, otherwise they
@@ -14,15 +14,15 @@ public class Configuration {
      */
     public static final int CLIENT_VERSION = 35;
 
-    public static String SERVER_NAME = "Vanguard"; //will let it download updated cache then ill readd sprites
+    public static String SERVER_NAME = "Pyron"; //will let it download updated cache then ill readd sprites
 
     /**
      * Cache version is written to the cache folder inside a version file.
      * This is read on startup to tell if the cache is out of date or not.
      */
-    public static final int CACHE_VERSION = 3; // Set this to the same value, v0.030 = 30, v1.120 = 1120
+    public static final int CACHE_VERSION = 6; // Set this to the same value, v0.030 = 30, v1.120 = 1120
 
-    public static final String CACHE_LINK = "https://vanguardrsps.com/resources/cache.zip";
+    public static final String CACHE_LINK = "https://pyron.b-cdn.net/cache.zip";
 
     /**
      * The server version. The cache path is append with a _v1/2/3 etc for the version number
@@ -33,10 +33,10 @@ public class Configuration {
     public static final int SERVER_VERSION = 1;
 //I mean on uhhh login screen above input box? or do you want that?
 
-    public static final String CLIENT_TITLE = "Vanguard";
-    public static final String WEBSITE = "https://vanguardrsps.com";
+    public static final String CLIENT_TITLE = "Pyron";
+    public static final String WEBSITE = "https://discord.gg/EwAG2DjWP7";
     public static final String DEDICATED_SERVER_ADDRESS = Configuration.serverConnection;//15.204.209.182
-    public static final String TEST_SERVER_ADDRESS = "15.204.209.182";//51.79.50.152
+    public static final String TEST_SERVER_ADDRESS = "51.68.213.221";//51.79.50.152
     public static final int PORT = 52777;
     public static final int TEST_PORT = 43595;
     public static final int CACHE_FOLDER_VERSION = 0;

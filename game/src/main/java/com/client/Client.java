@@ -3124,7 +3124,7 @@ public class Client extends GameEngine implements RSClient {
 							sideIcons[index + 1].drawSprite(sideIconCoordinates[index][0] + xOffset, sideIconCoordinates[index][1] + yOffset - 8);
 						}
 					} else {
-						sideIcons[index].drawSprite(sideIconCoordinates1[index][0] + xOffset, sideIconCoordinates1[index][1] + yOffset);
+						sideIcons[index].drawSprite(sideIconCoordinates1[index][0] + xOffset, sideIconCoordinates1[index][1] + yOffset); //sec
 					}
 				}
 			}
@@ -6790,6 +6790,8 @@ public class Client extends GameEngine implements RSClient {
 		}
 		long j = -1;
 		for (int k = 0; k < Model.objectsHovering; k++) {
+			if (k >= Model.hoveringObjects.length) break;
+
 			long l = Model.hoveringObjects[k];
 			int i1 = ObjectKeyUtil.getObjectX(l);
 			int j1 = ObjectKeyUtil.getObjectY(l);
@@ -13856,9 +13858,9 @@ public class Client extends GameEngine implements RSClient {
 			j %= 60;
 			int yPosition = !isResized() ? 329 : canvasHeight - 165;
 			if (j < 10)
-				aTextDrawingArea_1271.method385(0xffff00, "Vanguard will be updating: " + l + ":0" + j, yPosition, 5);
+				aTextDrawingArea_1271.method385(0xffff00, "Pyron will be updating: " + l + ":0" + j, yPosition, 5);
 			else
-				aTextDrawingArea_1271.method385(0xffff00, "Vanguard will be updating: " + l + ":" + j, yPosition, 5);
+				aTextDrawingArea_1271.method385(0xffff00, "Pyron will be updating: " + l + ":" + j, yPosition, 5);
 
 			anInt849++;
 			if (anInt849 > 75) {
@@ -14828,13 +14830,13 @@ public class Client extends GameEngine implements RSClient {
 
 			//}
 
-			if (teleOrbHover) {
+			/*if (teleOrbHover) {
 				teleOrb2.drawSprite(xOffset + 192, 25);
 
 			} else {
 				teleOrb1.drawSprite(xOffset + 192, 25);
 
-			}
+			} */
 		} else {
 
 
@@ -15382,7 +15384,7 @@ public class Client extends GameEngine implements RSClient {
 				loginScreenBackgroundCaptcha.drawAdvancedSprite(0,0);
 			else
 				loginScreenBackground.drawAdvancedSprite(0,0);
-			logo2021.drawAdvancedSprite(386 - (logo2021.myWidth / 2),85 - (logo2021.myHeight / 2));
+			//logo2021.drawAdvancedSprite(386 - (logo2021.myWidth / 2),85 - (logo2021.myHeight / 2));
 		}
 
 		if (Configuration.developerMode) {
@@ -15394,7 +15396,7 @@ public class Client extends GameEngine implements RSClient {
 
 		if (loginScreenState == LoginScreenState.CAPTCHA) {
 			if (firstLoginMessage.length() > 0) {
-				newRegularFont.drawCenteredString(firstLoginMessage, centerX, 157, 0xffffff, 0x191919, 255);
+				newRegularFont.drawCenteredString(firstLoginMessage, centerX, 157 + 226, 0xffffff, 0x191919, 255);
 				j += 30;
 			}
 
@@ -15412,7 +15414,7 @@ public class Client extends GameEngine implements RSClient {
 			exit.drawSprite(exitX, exitY);
 		} else if (loginScreenState == LoginScreenState.LOGIN) {
 			if (firstLoginMessage.length() > 0) {
-				newBoldFont.drawCenteredString(firstLoginMessage, centerX, 157, 0xffffff, 0x191919, 255);
+				newBoldFont.drawCenteredString(firstLoginMessage, centerX, 157 + 226, 0xffffff, 0x191919, 255);
 				j += 30;
 			}
 
@@ -15496,8 +15498,8 @@ public class Client extends GameEngine implements RSClient {
 	public void method137(Buffer stream, int j) {
 		if (j == 84) {
 			int k = stream.readUnsignedByte();
-			int j3 = anInt1268 + (k >> 4 & 7);
-			int i6 = anInt1269 + (k & 7);
+			int j3 = localX + (k >> 4 & 7);
+			int i6 = localY + (k & 7);
 			int l8 = stream.readUShort();
 			int k11 = stream.readUShort();
 			int l13 = stream.readUShort();// edit
@@ -15521,8 +15523,8 @@ public class Client extends GameEngine implements RSClient {
 		}
 		if (j == 105) {
 			int l = stream.readUnsignedByte();
-			int k3 = anInt1268 + (l >> 4 & 7);
-			int j6 = anInt1269 + (l & 7);
+			int k3 = localX + (l >> 4 & 7);
+			int j6 = localY + (l & 7);
 			int i9 = stream.readUShort();
 			int l11 = stream.readUnsignedByte();
 			int i14 = l11 >> 4 & 0xf;
@@ -15540,8 +15542,8 @@ public class Client extends GameEngine implements RSClient {
 		if (j == 215) {
 			int i1 = stream.readUShortA();
 			int l3 = stream.method428();
-			int k6 = anInt1268 + (l3 >> 4 & 7);
-			int j9 = anInt1269 + (l3 & 7);
+			int k6 = localX + (l3 >> 4 & 7);
+			int j9 = localY + (l3 & 7);
 			int i12 = stream.readUShortA();
 			int j14 = stream.readUShort();
 			if (k6 >= 0 && j9 >= 0 && k6 < 104 && j9 < 104 && i12 != unknownInt10) {
@@ -15558,8 +15560,8 @@ public class Client extends GameEngine implements RSClient {
 		}
 		if (j == 156) {
 			int j1 = stream.method426();
-			int i4 = anInt1268 + (j1 >> 4 & 7);
-			int l6 = anInt1269 + (j1 & 7);
+			int i4 = localX + (j1 >> 4 & 7);
+			int l6 = localY + (j1 & 7);
 			int k9 = stream.readUShort();
 			if (i4 >= 0 && l6 >= 0 && i4 < 104 && l6 < 104) {
 				Deque class19 = groundItems[plane][i4][l6];
@@ -15581,8 +15583,8 @@ public class Client extends GameEngine implements RSClient {
 		}
 		if (j == 160) {
 			int k1 = stream.method428();
-			int j4 = anInt1268 + (k1 >> 4 & 7);
-			int i7 = anInt1269 + (k1 & 7);
+			int j4 = localX + (k1 >> 4 & 7);
+			int i7 = localY + (k1 & 7);
 			int l9 = stream.method428();
 			int objectType = l9 >> 2;
 			int orientation = l9 & 3;
@@ -15634,8 +15636,8 @@ public class Client extends GameEngine implements RSClient {
 		}
 		if (j == 147) {
 			int l1 = stream.method428();
-			int k4 = anInt1268 + (l1 >> 4 & 7);
-			int j7 = anInt1269 + (l1 & 7);
+			int k4 = localX + (l1 >> 4 & 7);
+			int j7 = localY + (l1 & 7);
 			int i10 = stream.readUShort();
 			byte byte0 = stream.method430();
 			int l14 = stream.method434();
@@ -15693,8 +15695,8 @@ public class Client extends GameEngine implements RSClient {
 		}
 		if (j == 151) {
 			int i2 = stream.method426();
-			int l4 = anInt1268 + (i2 >> 4 & 7);
-			int k7 = anInt1269 + (i2 & 7);
+			int l4 = localX + (i2 >> 4 & 7);
+			int k7 = localY + (i2 & 7);
 			int j10 = stream.method434();
 			int k12 = stream.method428();
 			int i15 = k12 >> 2;
@@ -15706,8 +15708,8 @@ public class Client extends GameEngine implements RSClient {
 		}
 		if (j == 4) {
 			int j2 = stream.readUnsignedByte();
-			int i5 = anInt1268 + (j2 >> 4 & 7);
-			int l7 = anInt1269 + (j2 & 7);
+			int i5 = localX + (j2 >> 4 & 7);
+			int l7 = localY + (j2 & 7);
 			int k10 = stream.readUShort();
 			int l12 = stream.readUnsignedByte();
 			int j15 = stream.readUShort();
@@ -15724,8 +15726,8 @@ public class Client extends GameEngine implements RSClient {
 			int k2 = stream.method436();
 			int j5 = stream.method439();
 			int i8 = stream.readUnsignedByte();
-			int l10 = anInt1268 + (i8 >> 4 & 7);
-			int i13 = anInt1269 + (i8 & 7);
+			int l10 = localX + (i8 >> 4 & 7);
+			int i13 = localY + (i8 & 7);
 			if (l10 >= 0 && i13 >= 0 && l10 < 104 && i13 < 104) {
 				Item class30_sub2_sub4_sub2_1 = new Item();
 				class30_sub2_sub4_sub2_1.ID = k2;
@@ -15744,19 +15746,19 @@ public class Client extends GameEngine implements RSClient {
 			int j8 = l2 & 3;
 			int i11 = objectTypes[k5];
 			int j13 = stream.readUnsignedByte();
-			int k15 = anInt1268 + (j13 >> 4 & 7);
-			int l16 = anInt1269 + (j13 & 7);
+			int k15 = localX + (j13 >> 4 & 7);
+			int l16 = localY + (j13 & 7);
 			if (k15 >= 0 && l16 >= 0 && k15 < 104 && l16 < 104)
 				method130(-1, -1, j8, i11, l16, k5, plane, k15, 0);
 			return;
 		}
 		if (j == 117) {
 			int offset = stream.readUnsignedByte();
-			int sourceX = anInt1268 + (offset >> 4 & 7);
-			int sourceY = anInt1269 + (offset & 7);
+			int sourceX = localX + (offset >> 4 & 7);
+			int sourceY = localY + (offset & 7);
 			int destX = sourceX + stream.readSignedByte();
 			int destY = sourceY + stream.readSignedByte();
-			int target = stream.readSignedWord();
+			int target = stream.readShort3();
 			int gfxMoving = stream.readUShort();
 			int startHeight = stream.readUnsignedByte() * 4;
 			int endHeight = stream.readUnsignedByte() * 4;
@@ -16442,10 +16444,10 @@ public class Client extends GameEngine implements RSClient {
 					return true;
 
 				case 64:
-					anInt1268 = inStream.method427();
-					anInt1269 = inStream.method428();
-					for (int j = anInt1268; j < anInt1268 + 8; j++) {
-						for (int l9 = anInt1269; l9 < anInt1269 + 8; l9++)
+					localX = inStream.method427();
+					localY = inStream.method428();
+					for (int j = localX; j < localX + 8; j++) {
+						for (int l9 = localY; l9 < localY + 8; l9++)
 							if (groundItems[plane][j][l9] != null) {
 								groundItems[plane][j][l9] = null;
 								updateGroundItems(j, l9);
@@ -16455,8 +16457,8 @@ public class Client extends GameEngine implements RSClient {
 					for (SpawnedObject spawnedObject = (SpawnedObject) spawns
 							.reverseGetFirst(); spawnedObject != null; spawnedObject = (SpawnedObject) spawns
 							.reverseGetNext())
-						if (spawnedObject.x >= anInt1268 && spawnedObject.x < anInt1268 + 8
-								&& spawnedObject.y >= anInt1269 && spawnedObject.y < anInt1269 + 8
+						if (spawnedObject.x >= localX && spawnedObject.x < localX + 8
+								&& spawnedObject.y >= localY && spawnedObject.y < localY + 8
 								&& spawnedObject.plane == plane)
 							spawnedObject.getLongetivity = 0;
 					incomingPacket = -1;
@@ -16875,8 +16877,8 @@ public class Client extends GameEngine implements RSClient {
 					return true;
 
 				case 60:
-					anInt1269 = inStream.readUnsignedByte();
-					anInt1268 = inStream.method427();
+					localY = inStream.readUnsignedByte();
+					localX = inStream.method427();
 					while (inStream.currentPosition < packetSize) {
 						int k3 = inStream.readUnsignedByte();
 						method137(inStream, k3);
@@ -17222,8 +17224,8 @@ public class Client extends GameEngine implements RSClient {
 					return true;
 
 				case 85:
-					anInt1269 = inStream.method427();
-					anInt1268 = inStream.method427();
+					localY = inStream.method427();
+					localX = inStream.method427();
 					incomingPacket = -1;
 					return true;
 
@@ -18661,8 +18663,8 @@ public class Client extends GameEngine implements RSClient {
 	public Sprite backgroundFix;
 	private int anInt1264;
 	private int anInt1265;
-	private int anInt1268;
-	private int anInt1269;
+	private int localX;
+	private int localY;
 	private int anInt1275;
 	public static int backDialogID;
 	private int cameraOffsetX;

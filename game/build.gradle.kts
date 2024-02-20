@@ -1,7 +1,10 @@
-import proguard.gradle.ProGuardTask
+plugins {
+    kotlin("jvm")
+}
 
-group = "com.client"
-version = "0.0.1"
+kotlin {
+    jvmToolchain(11)
+}
 
 dependencies {
     implementation(project(":runelite"))
@@ -40,7 +43,6 @@ dependencies {
 }
 
 tasks {
-
     register<JavaExec>("Run-Normal") {
         group = "Runelite"
         description = "Run Runelite in Normal Mode"
@@ -56,13 +58,4 @@ tasks {
         classpath = project.sourceSets.main.get().runtimeClasspath
         mainClass.set("Application")
     }
-
-    jar {
-        destinationDirectory.set(file("${rootProject.buildDir}\\libs\\"))
-        archiveBaseName.set("client")
-        from(sourceSets.main.get().resources) {
-            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        }
-    }
-
 }

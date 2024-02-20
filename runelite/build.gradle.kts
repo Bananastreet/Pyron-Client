@@ -1,5 +1,10 @@
-group = "net.runelite"
-version = "0.0.1"
+plugins {
+    kotlin("jvm")
+}
+
+kotlin {
+    jvmToolchain(11)
+}
 
 dependencies {
     val lombokVersion = "1.18.24"

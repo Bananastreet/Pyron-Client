@@ -138,7 +138,7 @@ public final class Interfaces extends RSInterface {
 		main.totalChildren(39);
 		addSprite(9001, 0, dir); //BG
 		main.child(0, 9001, 8, 7); //BG
-		addText(9002, 1, 0xFFA500, true, "Vanguard Battlepass", true); //TITLE
+		addText(9002, 1, 0xFFA500, true, "Pyron Battlepass", true); //TITLE
 		main.child(1, 9002, 255, 17); //TITLE
 		/* Free Battlepass Items */
 		addConfigSpriteNew(9102,dir, 7, 1, 0, 0);

@@ -1,4 +1,4 @@
-rootProject.name = "Vanguard-Client"
+rootProject.name = "Pyron-Client"
 
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
@@ -11,10 +11,13 @@ dependencyResolutionManagement {
 }
 
 pluginManagement {
-
     repositories {
         gradlePluginPortal()
         maven("https://jitpack.io")
+    }
+    plugins {
+        kotlin("jvm") version "1.8.22"
+        id("com.github.johnrengelman.shadow") version "8.1.1"
     }
     resolutionStrategy {
         eachPlugin {
@@ -24,4 +27,4 @@ pluginManagement {
     }
 }
 
-include("game","runelite")
+include("game","runelite", "app")

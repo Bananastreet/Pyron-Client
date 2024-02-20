@@ -73,7 +73,7 @@ public class ClientLoader implements Supplier<Applet>
 	{
 		try
 		{
-			SplashScreen.stage(.465, "Starting", "Starting " + "Vanguard");
+			SplashScreen.stage(.465, "Starting", "Starting " + "Pyron");
 
 			Applet rs = loadVanilla();
 

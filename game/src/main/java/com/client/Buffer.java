@@ -276,6 +276,15 @@ public final class Buffer extends Cacheable {
         return payload[currentPosition++];
     }
 
+    public int readShort3() {
+        this.currentPosition += 2;
+        int value = ((this.payload[this.currentPosition - 2] & 0xff) << 8) + (this.payload[this.currentPosition - 1] & 0xff);
+
+        if (value > 60000)
+            value = -65535 + value;
+        return value;
+    }
+
     public int readTriByte() {
         currentPosition += 3;
         return ((payload[currentPosition - 3] & 0xff) << 16)
