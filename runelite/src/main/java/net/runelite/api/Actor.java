@@ -270,7 +270,7 @@ public interface Actor extends Renderable, Locatable
 	 * @param frame the animation frame
 	 * @deprecated use setAnimationFrame
 	 */
-	@Deprecated(since = "5.0.0", forRemoval = false) // deprecated upstream
+	//@Deprecated(since = "5.0.0", forRemoval = false) // deprecated upstream
 	void setActionFrame(int frame);
 
 	/**

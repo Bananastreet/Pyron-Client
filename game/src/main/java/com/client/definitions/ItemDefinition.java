@@ -5230,7 +5230,7 @@ public final class ItemDefinition implements RSItemComposition {
                 break;
 
             case 619:
-                itemDef.name = "Fall 2023 Ticket";
+                itemDef.name = "Seasonal Ticket";
                 itemDef.colorReplace = new int[]{16714, 7403, 3532};
                 itemDef.colorFind = new int[]{6073, 0, 6073};
                 itemDef.stackable = true;

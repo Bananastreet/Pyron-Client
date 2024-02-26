@@ -162,22 +162,22 @@ public class Text
 	 */
 	public static String removeFormattingTags(String str)
 	{
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuffer stringBuffer = new StringBuffer();
 		Matcher matcher = TAG_REGEXP.matcher(str);
 		while (matcher.find())
 		{
-			matcher.appendReplacement(stringBuilder, "");
+			matcher.appendReplacement(stringBuffer, "");
 			String match = matcher.group(0);
 			switch (match)
 			{
 				case "<lt>":
 				case "<gt>":
-					stringBuilder.append(match);
+					stringBuffer.append(match);
 					break;
 			}
 		}
-		matcher.appendTail(stringBuilder);
-		return stringBuilder.toString();
+		matcher.appendTail(stringBuffer);
+		return stringBuffer.toString();
 	}
 
 

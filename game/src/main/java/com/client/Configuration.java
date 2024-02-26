@@ -6,7 +6,7 @@ public class Configuration {
 
     public static boolean LOCAL_HOST = false;
 
-    public static String serverConnection = "51.68.213.221";
+    public static String serverConnection = LOCAL_HOST ? "localhost" : "51.68.213.221";
     /**
      * Client version is a number that will tell the server whether
      * the player has the most up-to-date client, otherwise they
